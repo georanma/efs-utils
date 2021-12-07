@@ -53,7 +53,7 @@ The `efs-utils` package has been verified against the following MacOS distributi
 For those using Amazon Linux or Amazon Linux 2, the easiest way to install `efs-utils` is from Amazon's repositories:
 
 ```
-$ sudo yum -y install amazon-efs-utils
+sudo yum -y install amazon-efs-utils
 ```
 
 ### Install via AWS Systems Manager Distributor
@@ -78,22 +78,22 @@ Other distributions require building the package from source and installing it.
 If the distribution is not OpenSUSE or SLES
 
 ```
-$ sudo yum -y install git rpm-build make
-$ git clone https://github.com/aws/efs-utils
-$ cd efs-utils
-$ make rpm
-$ sudo yum -y install build/amazon-efs-utils*rpm
+sudo yum -y install git rpm-build make
+git clone https://github.com/aws/efs-utils
+cd efs-utils
+make rpm
+sudo yum -y install build/amazon-efs-utils*rpm
 ```
 
 Otherwise
 
 ```
-$ sudo zypper refresh
-$ sudo zypper install -y git rpm-build make
-$ git clone https://github.com/aws/efs-utils
-$ cd efs-utils
-$ make rpm
-$ sudo zypper --no-gpg-checks install -y build/amazon-efs-utils*rpm
+sudo zypper refresh
+sudo zypper install -y git rpm-build make
+git clone https://github.com/aws/efs-utils
+cd efs-utils
+make rpm
+sudo zypper --no-gpg-checks install -y build/amazon-efs-utils*rpm
 ```
 
 On OpenSUSE, if you see error like `File './suse/noarch/bash-completion-2.11-2.1.noarch.rpm' not found on medium 'http://download.opensuse.org/tumbleweed/repo/oss/'`
@@ -108,12 +108,12 @@ sudo zypper refresh
 - To build and install a Debian package:
 
 ```
-$ sudo apt-get update
-$ sudo apt-get -y install git binutils
-$ git clone https://github.com/aws/efs-utils
-$ cd efs-utils
-$ ./build-deb.sh
-$ sudo apt-get -y install ./build/amazon-efs-utils*deb
+sudo apt-get update
+sudo apt-get -y install git binutils
+git clone https://github.com/aws/efs-utils
+cd efs-utils
+./build-deb.sh
+sudo apt-get -y install ./build/amazon-efs-utils*deb
 ```
 
 ### On MacOS Big Sur distribution
@@ -146,15 +146,15 @@ To disable watchdog for using TLS mounts:
 - [Set up a virtualenv](http://libzx.so/main/learning/2016/03/13/best-practice-for-virtualenv-and-git-repos.html) for efs-utils
 
 ```
-$ virtualenv ~/.envs/efs-utils
-$ source ~/.envs/efs-utils/bin/activate
-$ pip install -r requirements.txt
+virtualenv ~/.envs/efs-utils
+source ~/.envs/efs-utils/bin/activate
+pip install -r requirements.txt
 ```
 
 - Run tests
 
 ```
-$ make test
+make test
 ```
 
 ## Usage
@@ -166,44 +166,44 @@ $ make test
 To mount with the recommended default options, simply run:
 
 ```
-$ sudo mount -t efs file-system-id efs-mount-point/
+sudo mount -t efs file-system-id efs-mount-point/
 ```
 
 To mount file system to a specific mount target of the file system, run:
 
 ```
-$ sudo mount -t efs -o mounttargetip=mount-target-ip-address file-system-id efs-mount-point/
+sudo mount -t efs -o mounttargetip=mount-target-ip-address file-system-id efs-mount-point/
 ```
 
 To mount file system within a given network namespace, run:
 
 ```
-$ sudo mount -t efs -o netns=netns-path file-system-id efs-mount-point/
+sudo mount -t efs -o netns=netns-path file-system-id efs-mount-point/
 ```
 
 To mount file system to the mount target in specific availability zone (e.g. us-east-1a), run:
 
 ```
-$ sudo mount -t efs -o az=az-name file-system-id efs-mount-point/
+sudo mount -t efs -o az=az-name file-system-id efs-mount-point/
 ```
 
 To mount over TLS, simply add the `tls` option:
 
 ```
-$ sudo mount -t efs -o tls file-system-id efs-mount-point/
+sudo mount -t efs -o tls file-system-id efs-mount-point/
 ```
 
 To authenticate with EFS using the system’s IAM identity, add the `iam` option. This option requires the `tls` option.
 
 ```
-$ sudo mount -t efs -o tls,iam file-system-id efs-mount-point/
+sudo mount -t efs -o tls,iam file-system-id efs-mount-point/
 ```
 
 To mount using an access point, use the `accesspoint=` option. This option requires the `tls` option.
 The access point must be in the "available" state before it can be used to mount EFS.
 
 ```
-$ sudo mount -t efs -o tls,accesspoint=access-point-id file-system-id efs-mount-point/
+sudo mount -t efs -o tls,accesspoint=access-point-id file-system-id efs-mount-point/
 ```
 
 To mount your file system automatically with any of the options above, you can add entries to `/efs/fstab` like:
@@ -225,17 +225,17 @@ or refer to the [documentation](https://docs.aws.amazon.com/efs/latest/ug/using-
 For EC2 instances using Mac distribution, the recommended default options will perform a tls mount:
 
 ```
-$ sudo mount -t efs file-system-id efs-mount-point/
+sudo mount -t efs file-system-id efs-mount-point/
 ```
  or
 ```
-$ sudo mount -t efs -o tls file-system-id efs-mount-point/
+sudo mount -t efs -o tls file-system-id efs-mount-point/
 ```
 
 To mount without TLS, simply add the `notls` option:
 
 ```
-$ sudo mount -t efs -o notls file-system-id efs-mount-point/
+sudo mount -t efs -o notls file-system-id efs-mount-point/
 ```
 
 
@@ -377,13 +377,13 @@ sed -i "s/optimize_readahead = true/optimize_readahead = false/" /etc/amazon/efs
 You can mount file system with a given rsize, run:
 
 ```bash
-$ sudo mount -t efs -o rsize=rsize-value-in-bytes file-system-id efs-mount-point/
+sudo mount -t efs -o rsize=rsize-value-in-bytes file-system-id efs-mount-point/
 ```
 
 You can also manually chose a value of read_ahead_kb to optimize read throughput on Linux 5.4+ after mount.
 
 ```bash
-$ sudo bash -c "echo read-ahead-value-in-kb > /sys/class/bdi/0:$(stat -c '%d' efs-mount-point)/read_ahead_kb"
+sudo bash -c "echo read-ahead-value-in-kb > /sys/class/bdi/0:$(stat -c '%d' efs-mount-point)/read_ahead_kb"
 ```
 
 ## Using botocore to retrieve mount target ip address when dns name cannot be resolved
@@ -421,7 +421,7 @@ To authenticate with EFS using the system’s IAM identity of an awsprofile, add
 `awsprofile` option. These options require the `tls` option.
 
 ```
-$ sudo mount -t efs -o tls,iam,aws-profile=test-profile file-system-id efs-mount-point/
+sudo mount -t efs -o tls,iam,aws-profile=test-profile file-system-id efs-mount-point/
 ```
 
 To configure the named profile, see the [Named Profiles doc](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
